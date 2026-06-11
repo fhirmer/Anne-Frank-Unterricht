@@ -1,0 +1,37 @@
+/*
+  ╔══════════════════════════════════════════╗
+  ║  THEME – hier alle Farben & Größen       ║
+  ║  anpassen, wirkt sich auf alles aus      ║
+  ╚══════════════════════════════════════════╝
+*/
+
+:root {
+  /* Farben */
+  --dark:    #08111A;
+  --deep:    #0D1B2A;
+  --card:    #162840;
+  --panel:   #1E3352;
+  --cream:   #EFE5D2;
+  --white:   #F8F3EC;
+  --accent:  #C4623C;   /* Hauptakzent – Terrakotta-Orange */
+  --muted:   #7A8FA4;   /* gedämpfter Text */
+  --gold:    #F0BF40;   /* Glossar-Highlight */
+  --yellow:  #F0BF40;   /* Notiz-Folien */
+  --cream2:  #EBE0CE;   /* Sprechblasen-Hintergrund */
+  --imgbg:   #1A2B3C;   /* Bild-Platzhalter Hintergrund */
+
+  /* Hintergrundbild (body) */
+  --bg-image: url('../images/hinterhaus-foto.jpg');
+  --bg-overlay: rgba(4, 10, 18, 0.82);  /* Dunkelheit über Hintergrundfoto */
+
+  /* Navigation */
+  --nav-height-top:    44px;
+  --nav-height-bottom: 60px;
+
+  /* Schriften */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-serif: Georgia, serif;
+
+  /* Abstände */
+  --slide-radius: 10px;
+}

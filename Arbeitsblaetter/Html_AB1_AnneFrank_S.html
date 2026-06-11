@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AB 1 – Anne Frank: Wer war sie?</title>
+  <style>
+    @page { size: A4; margin: 0; }
+
+    :root {
+      --accent:        #5c3010;
+      --accent-mid:    #7a4820;
+      --accent-border: #c4906a;
+      --accent-light:  #f2e4d8;
+      --accent-bg:     #faf5f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+      color: #1a1a1a;
+      background: #888;
+      padding: 10mm;
+    }
+
+    @media print {
+      html, body { width: 210mm; height: 297mm; margin: 0; padding: 0; }
+      .page {
+        width: 210mm;
+        height: 297mm;
+        min-height: 297mm;
+        max-height: 297mm;
+        overflow: hidden;
+        box-shadow: none;
+        margin: 0;
+      }
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      min-height: 297mm;
+      max-height: 297mm;
+      overflow: hidden;
+      box-sizing: border-box;
+      background: white;
+      margin: 0 auto;
+      padding: 13mm 17mm 11mm 17mm;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.35);
+    }
+
+    /* ════════════════════════════════════════════════
+       HEADER
+    ════════════════════════════════════════════════ */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2pt solid var(--accent);
+      padding-bottom: 3pt;
+      margin-bottom: 5pt;
+    }
+
+    .header-title {
+      font-size: 12pt;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .header-fields {
+      font-size: 9pt;
+      color: #555;
+      display: flex;
+      gap: 8pt;
+      align-items: baseline;
+      flex-shrink: 0;
+    }
+
+    .field-l {
+      border-bottom: 0.75pt solid #bbb;
+      display: inline-block;
+      min-width: 42mm;
+      margin-left: 2pt;
+    }
+
+    .field-s {
+      border-bottom: 0.75pt solid #bbb;
+      display: inline-block;
+      min-width: 18mm;
+      margin-left: 2pt;
+    }
+
+    /* ════════════════════════════════════════════════
+       TASK BOXES
+    ════════════════════════════════════════════════ */
+    .task-box {
+      border: 1pt solid var(--accent-border);
+      border-radius: 5pt;
+      overflow: visible;
+      margin-bottom: 5pt;
+    }
+
+    .task-head {
+      background: linear-gradient(to right, var(--accent), var(--accent-mid));
+      color: white;
+      padding: 3pt 9pt;
+      border-radius: 4pt 4pt 0 0;
+      display: flex;
+      align-items: center;
+      gap: 8pt;
+    }
+
+    .task-nr {
+      background: white;
+      color: var(--accent);
+      font-size: 9pt;
+      font-weight: 800;
+      padding: 1.5pt 7pt;
+      border-radius: 8pt;
+      flex-shrink: 0;
+      letter-spacing: 0.3pt;
+    }
+
+    .task-title { font-weight: 700; font-size: 11pt; }
+    .task-hint  { font-size: 9pt; opacity: 0.85; margin-left: auto; }
+
+    .task-body { padding: 5pt 8pt 4pt; }
+
+    /* ════════════════════════════════════════════════
+       AUFGABE 1 – LÜCKENTEXT
+    ════════════════════════════════════════════════ */
+    .lueckentext-body { font-size: 11pt; line-height: 2.6; hyphens: auto; }
+
+    .float-bild {
+      float: right;
+      width: 43mm;
+      margin: 0 0 4pt 8pt;
+      border-radius: 4pt;
+      overflow: hidden;
+      border: 1pt solid var(--accent-border);
+    }
+
+    .float-bild img { width: 100%; display: block; }
+
+    .float-bild .bild-unter {
+      background: var(--accent-light);
+      padding: 2.5pt 5pt;
+      font-size: 7.5pt;
+      color: var(--accent);
+      font-style: italic;
+      text-align: center;
+    }
+
+    .wortbank {
+      background: var(--accent-bg);
+      border: 1pt solid var(--accent-border);
+      border-radius: 4pt;
+      padding: 3pt 8pt;
+      font-size: 10pt;
+      margin-top: 4pt;
+      display: block;
+      overflow: visible;
+      clear: both;
+    }
+
+    .wortbank strong { color: var(--accent); font-size: 10pt; }
+
+    .luecke {
+      display: inline-block;
+      border-bottom: 1.5pt solid #555;
+      min-width: 28mm;
+      height: 7mm;
+      vertical-align: text-bottom;
+      margin: 0 1.5pt;
+    }
+
+    p { margin-bottom: 3.5pt; }
+
+    .clearfix::after { content: ""; display: table; clear: both; }
+
+    /* ════════════════════════════════════════════════
+       AUFGABE 2 – REIHENFOLGE (Bildkarten)
+    ════════════════════════════════════════════════ */
+    .tl-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4pt;
+    }
+
+    .tl-col { display: flex; flex-direction: column; gap: 3pt; }
+
+    .tl-card {
+      display: flex;
+      align-items: stretch;
+      height: 20mm;
+      min-height: 20mm;
+      border: 1pt solid var(--accent-border);
+      border-radius: 5pt;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .tl-image-wrap {
+      position: relative;
+      width: 30mm;
+      height: 20mm;
+      flex: 0 0 30mm;
+      overflow: hidden;
+    }
+
+    .tl-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    .tl-img.pos-top    { object-position: center 30%; }
+    .tl-img.pos-bottom { object-position: center 70%; }
+
+    .tl-number {
+      position: absolute;
+      top: 2pt;
+      left: 2pt;
+      width: 7mm;
+      height: 7mm;
+      border-radius: 3pt;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1pt solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12pt;
+      font-weight: 700;
+      color: transparent;
+      z-index: 2;
+    }
+
+    .tl-text {
+      flex: 1;
+      padding: 4pt 6pt;
+      font-size: 11pt;
+      line-height: 1.25;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ════════════════════════════════════════════════
+       AUFGABE 3 – VERBINDEN (Pfeil-Karten)
+    ════════════════════════════════════════════════ */
+    .connect-layout {
+      display: grid;
+      grid-template-columns: max-content 20mm 1fr;
+      gap: 3pt;
+      align-items: stretch;
+    }
+
+    /* Begriff-Karte (links) – Pfeilspitze rechts */
+    .card-b {
+      background: white;
+      border: 1.5pt solid #999;
+      border-right: none;
+      border-radius: 5pt 0 0 5pt;
+      padding: 3pt 7pt;
+      font-weight: 700;
+      font-size: 11pt;
+      color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      min-height: 11mm;
+      line-height: 1.2;
+      position: relative;
+      z-index: 5;
+    }
+
+    .card-b::after {
+      content: "";
+      position: absolute;
+      right: -8pt;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 5.5pt solid transparent;
+      border-bottom: 5.5pt solid transparent;
+      border-left: 8pt solid #999;
+    }
+
+    /* Erklärung-Karte (rechts) – Pfeilspitze links */
+    .card-e {
+      background: white;
+      border: 1.5pt solid #999;
+      border-left: none;
+      border-radius: 0 5pt 5pt 0;
+      padding: 3pt 7pt 3pt 9pt;
+      font-size: 11pt;
+      display: flex;
+      align-items: center;
+      min-height: 11mm;
+      line-height: 1.2;
+      position: relative;
+      z-index: 5;
+    }
+
+    .card-e::before {
+      content: "";
+      position: absolute;
+      left: -8pt;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 5.5pt solid transparent;
+      border-bottom: 5.5pt solid transparent;
+      border-right: 8pt solid #999;
+    }
+
+    /* ════════════════════════════════════════════════
+       REFLEXIONSFRAGE
+    ════════════════════════════════════════════════ */
+    .reflex-question {
+      font-size: 11pt;
+      line-height: 1.45;
+      margin-bottom: 4pt;
+    }
+
+    .reflex-line {
+      display: block;
+      border-bottom: 1pt solid #bbb;
+      height: 7mm;
+    }
+
+    /* ════════════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════════════ */
+    .page-footer {
+      margin-top: 7pt;
+      font-size: 7.5pt;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ──────────────────────────────────── -->
+  <header class="page-header">
+    <div class="header-title">Arbeitsblatt 1 – Anne Frank: Wer war sie?</div>
+    <div class="header-fields">Name:&nbsp;<span class="field-l"></span></div>
+  </header>
+
+
+  <!-- ════════════════════════════════════════════════
+       AUFGABE 1 – LÜCKENTEXT
+  ════════════════════════════════════════════════ -->
+  <div class="task-box">
+    <div class="task-head">
+      <span class="task-nr">Aufgabe 1</span>
+      <span class="task-title">Lückentext</span>
+      <span class="task-hint">Fülle die Lücken aus &nbsp;·&nbsp; Benutze die Wortbank</span>
+    </div>
+    <div class="task-body lueckentext-body clearfix">
+
+      <div class="wortbank">
+        <strong>Wortbank:</strong>
+        1929 &nbsp;·&nbsp; Jüdin &nbsp;·&nbsp; Amsterdam &nbsp;·&nbsp; Hinterhaus &nbsp;·&nbsp; Tagebuch &nbsp;·&nbsp; verhaftet &nbsp;·&nbsp; 1945
+      </div>
+
+      <p>Anne Frank wurde am 12. Juni <span class="luecke"></span> in Frankfurt geboren. Sie war <span class="luecke"></span>. 1933 kam Adolf Hitler an die Macht. Er verfolgte alle Juden. Deshalb zog die Familie Frank nach <span class="luecke"></span>. 1942 versteckte sich die Familie im sogenannten <span class="luecke"></span>. Dort schrieb Anne in ihr <span class="luecke"></span>. 1944 wurde die Familie verraten und <span class="luecke"></span>. Anne starb am 12. März <span class="luecke"></span> im Konzentrationslager Bergen-Belsen.</p>
+
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       AUFGABE 2 – REIHENFOLGE
+  ════════════════════════════════════════════════ -->
+  <div class="task-box">
+    <div class="task-head">
+      <span class="task-nr">Aufgabe 2</span>
+      <span class="task-title">Reihenfolge</span>
+      <span class="task-hint">Schreibe die Zahl 1 – 6 in das Kästchen</span>
+    </div>
+    <div class="task-body">
+      <div class="tl-grid">
+
+        <div class="tl-col">
+          <div class="tl-card">
+            <div class="tl-image-wrap">
+              <span class="tl-number"></span>
+              <img class="tl-img" src="../images/anne-entdeckt-1944.png" alt="">
+            </div>
+            <div class="tl-text">Anne und ihre Familie werden verraten und verhaftet.</div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-image-wrap">
+              <span class="tl-number"></span>
+              <img class="tl-img" src="../images/anne-frankfurt-1929.png" alt="">
+            </div>
+            <div class="tl-text">Anne Frank wird in Frankfurt am Main geboren.</div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-image-wrap">
+              <span class="tl-number"></span>
+              <img class="tl-img" src="../images/anne-hinterhaus-1942.png" alt="">
+            </div>
+            <div class="tl-text">Die Familie versteckt sich im Hinterhaus in Amsterdam.</div>
+          </div>
+        </div>
+
+        <div class="tl-col">
+          <div class="tl-card">
+            <div class="tl-image-wrap">
+              <span class="tl-number"></span>
+              <img class="tl-img" src="../images/anne-amsterdam-1933.png" alt="">
+            </div>
+            <div class="tl-text">Die Familie Frank flieht von Deutschland nach Amsterdam.</div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-image-wrap">
+              <span class="tl-number"></span>
+              <img class="tl-img" src="../images/anne-erinnerung-1945.png" alt="">
+            </div>
+            <div class="tl-text">Anne stirbt im Konzentrationslager Bergen-Belsen.</div>
+          </div>
+          <div class="tl-card">
+            <div class="tl-image-wrap">
+              <span class="tl-number"></span>
+              <img class="tl-img" src="../images/anne-tagebuch.png" alt="">
+            </div>
+            <div class="tl-text">Anne bekommt zu ihrem 13. Geburtstag ein Tagebuch.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       AUFGABE 3 – VERBINDEN
+  ════════════════════════════════════════════════ -->
+  <div class="task-box">
+    <div class="task-head">
+      <span class="task-nr">Aufgabe 3</span>
+      <span class="task-title">Verbinden</span>
+      <span class="task-hint">Verbinde mit einer Linie</span>
+    </div>
+    <div class="task-body">
+
+      <div class="connect-layout">
+
+        <div class="card-b" data-left="tagebuch">Tagebuch</div>
+        <div></div>
+        <div class="card-e" data-right="frau-juedisch">Eine Frau des jüdischen Glaubens.</div>
+
+        <div class="card-b" data-left="konzentrationslager">Konzentrationslager</div>
+        <div></div>
+        <div class="card-e" data-right="verfolgung-erklaerung">Menschen wegen Herkunft oder Religion verfolgen.</div>
+
+        <div class="card-b" data-left="hinterhaus">Hinterhaus</div>
+        <div></div>
+        <div class="card-e" data-right="tagebuch-erklaerung">Buch, in das Anne täglich ihre Gedanken schrieb.</div>
+
+        <div class="card-b" data-left="juedin">Jüdin</div>
+        <div></div>
+        <div class="card-e" data-right="lager">Ort, an den Nazis Juden und andere Menschen brachten.</div>
+
+        <div class="card-b" data-left="verfolgung">Verfolgung</div>
+        <div></div>
+        <div class="card-e" data-right="hinterhaus-erklaerung">Das Versteck der Familie Frank in Amsterdam.</div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════
+       REFLEXIONSFRAGE
+  ════════════════════════════════════════════════ -->
+  <div class="task-box">
+    <div class="task-head">
+      <span class="task-nr">Aufgabe 4</span>
+      <span class="task-title">Nachdenken</span>
+      <span class="task-hint">Schreibe deine Antwort auf</span>
+    </div>
+    <div class="task-body">
+      <p class="reflex-question">Wenn du dich wie Anne für lange Zeit verstecken müsstest – wo würdest du dich verstecken?</p>
+      <span class="reflex-line"></span>
+    </div>
+  </div>
+
+
+  <footer class="page-footer">Anne Frank Unterricht von Hirmer</footer>
+
+</div>
+<script>if(new URLSearchParams(location.search).has('p'))window.addEventListener('load',()=>setTimeout(()=>window.print(),300));</script>
+</body>
+</html>

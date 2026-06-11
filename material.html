@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arbeitsmaterial – Anne Frank Unterricht</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #B85C38;
+      --cream:  #EFE5D2;
+      --muted:  #8898AA;
+      --gold:   #F0BF40;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #06101A url('images/hinterhaus-foto.jpg') center / cover no-repeat fixed;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      color: var(--cream);
+      padding: 3rem 1.6rem 5rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: rgba(4, 10, 18, 0.62);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-ui {
+      max-width: 980px;
+      margin: 0 auto 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .back-link {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+    }
+    .back-link:hover { color: var(--cream); }
+
+    .page-header { margin-bottom: 2.5rem; }
+
+    .page-header h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #F8F3EC;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.85);
+      line-height: 1.08;
+    }
+
+    .page-header h1 span {
+      display: block;
+      font-size: 0.42em;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-top: 0.28em;
+    }
+
+    /* ── Bulk print buttons ── */
+    .print-controls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.75rem 1.6rem;
+      border-radius: 9px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8B3A20 0%, var(--accent) 55%, #C9713E 100%);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(184,92,56,0.45);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #9D4225 0%, #CA6A40 55%, #D8825A 100%);
+    }
+
+    .btn-ghost {
+      background: rgba(12, 22, 36, 0.88);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+    }
+    .btn-ghost:hover { background: rgba(20, 36, 56, 0.95); }
+
+    /* ── Materials list ── */
+    #materials-container {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Per-sheet card ── */
+    .material-card {
+      background: transparent;
+      padding: 0;
+    }
+
+    .material-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+
+    .material-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .material-heading h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--cream);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-schueler { background: rgba(26,183,234,0.18); color: #80d4f0; }
+    .badge-loesung  { background: rgba(240,191,64,0.18);  color: var(--gold); }
+
+    .print-btn {
+      flex-shrink: 0;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(12, 22, 36, 0.88);
+      color: var(--cream);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .print-btn:hover { background: rgba(20,36,56,0.95); }
+
+    /* ── PNG preview ── */
+    .preview-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    .sheet-preview {
+      width: min(100%, 794px);
+      height: auto;
+      display: block;
+      background: white;
+      border-radius: 2px;
+      box-shadow:
+        0 22px 55px rgba(0,0,0,0.62),
+        0 6px 18px rgba(0,0,0,0.38);
+    }
+
+    /* ── Back card & footer ── */
+    .back-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: rgba(10,18,30,0.75);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1.1rem 1.6rem;
+      color: rgba(239,229,210,0.65);
+      font-size: 0.88rem;
+      font-weight: 600;
+      max-width: 300px;
+      margin: 2rem auto 0;
+      transition: background 0.15s, color 0.15s;
+      position: relative;
+      z-index: 1;
+    }
+    .back-card:hover { background: rgba(18,32,50,0.9); color: var(--cream); }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.28);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 1;
+    }
+    footer em { color: var(--accent); font-style: normal; }
+  </style>
+</head>
+<body>
+
+<div class="page-ui">
+  <a class="back-link" href="index.html">← Startseite</a>
+
+  <header class="page-header">
+    <h1>Anne Frank<span>Arbeitsmaterial</span></h1>
+  </header>
+
+  <div class="print-controls">
+    <button class="btn btn-primary" onclick="printPDF('Arbeitsblaetter/Pdf_Alle_Blaetter.pdf')">🖨 Alles drucken</button>
+    <button class="btn btn-ghost"   onclick="printPDF('Arbeitsblaetter/Pdf_Nur_Schuelerblaetter.pdf')">Nur Schülerblätter drucken</button>
+    <button class="btn btn-ghost"   onclick="printPDF('Arbeitsblaetter/Pdf_Nur_Loesungsblaetter.pdf')">Nur Lösungen drucken</button>
+  </div>
+</div>
+
+<div id="materials-container"></div>
+
+<a class="back-card" href="index.html">Zur Startseite</a>
+<footer>Anne Frank Unterricht · Gestaltet von <em>Hirmer</em></footer>
+
+<script>
+const MATERIALS = [
+  {
+    id:      'ab1-s',
+    type:    'SCHÜLER',
+    title:   'Arbeitsblatt 1 – Anne Frank: Wer war sie?',
+    pdf:     'Arbeitsblaetter/Pdf_AB1_AnneFrank_S.pdf',
+    preview: 'Arbeitsblaetter/previews/Png_AB1_AnneFrank_S.png'
+  },
+  {
+    id:      'ab1-l',
+    type:    'LÖSUNG',
+    title:   'Arbeitsblatt 1 – Anne Frank: Wer war sie?',
+    pdf:     'Arbeitsblaetter/Pdf_AB1_AnneFrank_L.pdf',
+    preview: 'Arbeitsblaetter/previews/Png_AB1_AnneFrank_L.png'
+  },
+  {
+    id:      'ab2-s',
+    type:    'SCHÜLER',
+    title:   'Arbeitsblatt 2 – Diskriminierung heute',
+    pdf:     'Arbeitsblaetter/Pdf_AB2_Diskriminierung_S.pdf',
+    preview: 'Arbeitsblaetter/previews/Png_AB2_Diskriminierung_S.png'
+  },
+  {
+    id:      'ab2-l',
+    type:    'LÖSUNG',
+    title:   'Arbeitsblatt 2 – Diskriminierung heute',
+    pdf:     'Arbeitsblaetter/Pdf_AB2_Diskriminierung_L.pdf',
+    preview: 'Arbeitsblaetter/previews/Png_AB2_Diskriminierung_L.png'
+  }
+];
+
+const container = document.getElementById('materials-container');
+
+for (const m of MATERIALS) {
+  const badgeClass = m.type === 'SCHÜLER' ? 'badge-schueler' : 'badge-loesung';
+
+  const card = document.createElement('section');
+  card.className = 'material-card';
+  card.dataset.type = m.type;
+
+  card.innerHTML =
+    `<div class="material-toolbar">` +
+      `<div class="material-heading">` +
+        `<h2>${m.title}</h2>` +
+        `<span class="badge ${badgeClass}">${m.type}</span>` +
+      `</div>` +
+      `<button class="print-btn" data-pdf="${m.pdf}">🖨 Drucken</button>` +
+    `</div>` +
+    `<a class="preview-wrap" href="${m.pdf}" target="_blank">` +
+      `<img class="sheet-preview" src="${m.preview}" alt="${m.title}" loading="lazy">` +
+    `</a>`;
+
+  container.appendChild(card);
+}
+
+container.addEventListener('click', e => {
+  const btn = e.target.closest('.print-btn');
+  if (btn) {
+    e.preventDefault();
+    printPDF(btn.dataset.pdf);
+  }
+});
+
+function printPDF(url) {
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+  iframe.src = url;
+  iframe.onload = () => setTimeout(() => {
+    iframe.contentWindow.focus();
+    iframe.contentWindow.print();
+  }, 300);
+  document.body.appendChild(iframe);
+}
+
+</script>
+
+</body>
+</html>

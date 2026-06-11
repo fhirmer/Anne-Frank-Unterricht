@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anne Frank Unterricht</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent: #B85C38;
+      --accent-hover: #C9713E;
+      --cream: #EFE5D2;
+      --muted: #8898AA;
+      --gold: #F0BF40;
+      --card-bg: rgba(12, 22, 36, 0.88);
+      --card-bg-hover: rgba(20, 36, 56, 0.95);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #06101A url('images/hinterhaus-foto.jpg') center / cover no-repeat fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      color: var(--cream);
+      padding: 3rem 1.4rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: rgba(4, 10, 18, 0.55);
+      pointer-events: none;
+    }
+
+    body > * { position: relative; z-index: 1; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 8vw, 4rem);
+      line-height: 1.05;
+      color: #F8F3EC;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.85);
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--accent);
+      font-size: 0.5em;
+      letter-spacing: 0.1em;
+      margin-top: 0.2em;
+    }
+
+    .hero p {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.55;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+    }
+
+    /* ── Actions ── */
+    .actions {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    /* Shared base */
+    .action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      font-family: inherit;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Primary – Präsentation */
+    .action-primary {
+      background: linear-gradient(135deg, #8B3A20 0%, var(--accent) 55%, #C9713E 100%);
+      padding: 1.8rem 2rem;
+      box-shadow: 0 6px 32px rgba(184,92,56,0.45);
+      border-color: transparent;
+    }
+
+    .action-primary:hover {
+      background: linear-gradient(135deg, #9D4225 0%, #CA6A40 55%, #D8825A 100%);
+      box-shadow: 0 10px 44px rgba(184,92,56,0.6);
+    }
+
+    .action-primary .label {
+      font-family: Georgia, serif;
+      font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+      color: #fff;
+      font-weight: normal;
+    }
+
+    /* Secondary – Material */
+    .action-secondary {
+      background: var(--card-bg);
+      padding: 1.3rem 1.6rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.55);
+      color: var(--cream);
+      font-size: 0;
+    }
+
+    .action-secondary:hover {
+      background: rgba(18, 32, 50, 0.95);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.65);
+    }
+
+    .action-secondary .label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    /* Material sub-items */
+    .material-sub {
+      background: rgba(10, 18, 30, 0.85);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: -0.3rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    .sub-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.6rem;
+      font-size: 0.88rem;
+      color: rgba(239,229,210,0.7);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .sub-item:last-child { border-bottom: none; }
+
+    .sub-item.disabled {
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .badge {
+      font-size: 0.6rem;
+      background: rgba(240,191,64,0.18);
+      color: var(--gold);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Tertiary – Filme */
+    .action-tertiary {
+      background: rgba(10, 18, 30, 0.75);
+      padding: 1.1rem 1.6rem;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.45);
+    }
+
+    .action-tertiary:hover {
+      background: rgba(16, 28, 44, 0.88);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.55);
+    }
+
+    .action-tertiary .label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: rgba(239,229,210,0.8);
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 3rem;
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    footer em { color: var(--accent); font-style: normal; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Anne Frank<span>Unterricht</span></h1>
+    <p>Ausgrenzung, Diskriminierung und was das mit uns heute zu tun hat.</p>
+  </header>
+
+  <main class="actions">
+
+    <a class="action action-primary" href="folien.html">
+      <span class="label">Präsentation starten</span>
+    </a>
+
+    <a class="action action-secondary" href="material.html">
+      <span class="label">Arbeitsmaterial herunterladen</span>
+    </a>
+
+    <a class="action action-tertiary" href="filme.html">
+      <span class="label">Weiterführende Filmideen</span>
+    </a>
+
+  </main>
+
+  <footer>Anne Frank Unterricht · Gestaltet von <em>Hirmer</em></footer>
+
+
+</body>
+</html>

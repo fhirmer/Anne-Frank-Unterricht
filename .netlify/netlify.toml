@@ -1,0 +1,25 @@
+plugins = []
+headers = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "/Users/flowflosn/Library/CloudStorage/OneDrive-St.Michaels-WerkGrafenwöhre.V/AnneFrankUnterricht/AnneFrankUnterrichtWebiste"
+publishOrigin = "default"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]

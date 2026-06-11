@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weiterführende Filmideen – Anne Frank Unterricht</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --accent:  #B85C38;
+      --cream:   #EFE5D2;
+      --muted:   #8898AA;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #06101A url('images/hinterhaus-foto.jpg') center / cover no-repeat fixed;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      color: var(--cream);
+      padding: 3rem 1.6rem 5rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: rgba(4, 10, 18, 0.62);
+      pointer-events: none;
+    }
+
+    body > * { position: relative; z-index: 1; }
+
+    /* ── Page wrapper ── */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+    }
+    .back-link:hover { color: var(--cream); }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #F8F3EC;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.85);
+      line-height: 1.08;
+    }
+
+    .page-header h1 span {
+      display: block;
+      font-size: 0.42em;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-top: 0.28em;
+    }
+
+    .page-header p {
+      margin-top: 0.85rem;
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── Film list ── */
+    .film-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    /* ── Film card ── */
+    .film-card {
+      display: flex;
+      align-items: stretch;
+      min-height: 320px;
+      background: rgba(12, 22, 36, 0.92);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+    }
+
+    /* ── Left: text (60%) ── */
+    .film-info {
+      flex: 3;
+      padding: 2.6rem 2.4rem 2.4rem 2.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .film-title {
+      font-family: Georgia, serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--cream);
+      line-height: 1.2;
+    }
+
+    .film-description {
+      font-size: 1rem;
+      color: rgba(239, 229, 210, 0.82);
+      line-height: 1.65;
+      max-width: 50ch;
+    }
+
+    /* Meta fields */
+    .film-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      list-style: none;
+    }
+
+    .film-meta li {
+      display: flex;
+      gap: 0.9rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .meta-label {
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .meta-value {
+      color: rgba(239, 229, 210, 0.85);
+    }
+
+    /* Button */
+    .watch-btn {
+      display: inline-block;
+      align-self: flex-start;
+      margin-top: auto;
+      background: linear-gradient(135deg, #8B3A20 0%, var(--accent) 55%, #C9713E 100%);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 2.4rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 20px rgba(184,92,56,0.5);
+      transition: background 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+
+    .watch-btn:hover {
+      background: linear-gradient(135deg, #9D4225 0%, #CA6A40 55%, #D8825A 100%);
+      box-shadow: 0 7px 30px rgba(184,92,56,0.7);
+    }
+
+    /* ── Right: thumbnail (40%) ── */
+    .film-thumb-wrap {
+      flex: 2;
+      padding: 1.6rem 1.8rem 1.6rem 0;
+      min-width: 0;
+    }
+
+    .film-thumb-wrap img,
+    .film-thumb-wrap .thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+    }
+
+    .thumb-placeholder {
+      background: linear-gradient(145deg, #2a1a35, #4a2d58);
+    }
+
+    /* ── Back to start ── */
+    .back-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: rgba(10, 18, 30, 0.75);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1.1rem 1.6rem;
+      color: rgba(239, 229, 210, 0.65);
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      max-width: 300px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .back-card:hover {
+      background: rgba(18, 32, 50, 0.9);
+      color: var(--cream);
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 3.5rem;
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.28);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+    footer em { color: var(--accent); font-style: normal; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .film-card {
+        flex-direction: column;
+        min-height: unset;
+      }
+      .film-info {
+        padding: 1.8rem;
+      }
+      .film-thumb-wrap {
+        padding: 0 1.8rem 1.8rem;
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <a class="back-link" href="index.html">← Startseite</a>
+
+  <header class="page-header">
+    <h1>Anne Frank<span>Weiterführende Filmideen</span></h1>
+    <p>Kuratierte Empfehlungen zur Vertiefung des Unterrichtsthemas</p>
+  </header>
+
+  <main class="film-list">
+
+    <div class="film-card">
+      <div class="film-info">
+
+        <h2 class="film-title">Wer war Anne Frank?</h2>
+
+        <p class="film-description">
+          Checker Tobi geht der Frage nach, wer Anne Frank war und warum ihr Tagebuch bis heute
+          Menschen auf der ganzen Welt bewegt. Die Sendung erklärt Anne Franks Lebensgeschichte
+          kindgerecht und zeigt, weshalb Erinnerung an die Zeit des Nationalsozialismus wichtig ist.
+        </p>
+
+        <ul class="film-meta">
+          <li>
+            <span class="meta-label">Produktion</span>
+            <span class="meta-value">Bayerischer Rundfunk (BR)</span>
+          </li>
+          <li>
+            <span class="meta-label">Jahr</span>
+            <span class="meta-value">2025</span>
+          </li>
+          <li>
+            <span class="meta-label">Laufzeit</span>
+            <span class="meta-value">12 Minuten</span>
+          </li>
+          <li>
+            <span class="meta-label">Genre</span>
+            <span class="meta-value">Wissenssendung</span>
+          </li>
+          <li>
+            <span class="meta-label">Plattform</span>
+            <span class="meta-value">ARD Mediathek</span>
+          </li>
+        </ul>
+
+        <a class="watch-btn"
+           href="https://www.ardmediathek.de/video/die-checker-webshow/wer-war-anne-frank/br/Y3JpZDovL2JyLmRlL2Jyb2FkY2FzdC9mM2Y2Y2YwZS0wY2U1LTQyNzYtODc4Zi1jMWM4ODlhM2E0Zjlfb25saW5lYnJvYWRjYXN0"
+           target="_blank" rel="noopener">
+          Jetzt ansehen
+        </a>
+
+      </div>
+
+      <div class="film-thumb-wrap">
+        <img src="images/FilmBilder/checker.png" alt="Wer war Anne Frank? – Die Checker Webshow">
+      </div>
+    </div>
+
+    <div class="film-card">
+      <div class="film-info">
+
+        <h2 class="film-title">Anne Frank</h2>
+
+        <p class="film-description">
+          Die Sendung „TRIFF" stellt Anne Frank vor und begleitet wichtige Stationen ihres Lebens.
+          Durch Spielszenen, historische Hintergründe und Erklärungen entsteht ein anschauliches Bild
+          davon, wer Anne Frank war, wie sie lebte und warum ihr Tagebuch bis heute bedeutend ist.
+        </p>
+
+        <ul class="film-meta">
+          <li>
+            <span class="meta-label">Produktion</span>
+            <span class="meta-value">KiKA / TRIFF</span>
+          </li>
+          <li>
+            <span class="meta-label">Jahr</span>
+            <span class="meta-value">2025</span>
+          </li>
+          <li>
+            <span class="meta-label">Laufzeit</span>
+            <span class="meta-value">25 Minuten</span>
+          </li>
+          <li>
+            <span class="meta-label">Genre</span>
+            <span class="meta-value">Doku-Fiktion</span>
+          </li>
+          <li>
+            <span class="meta-label">Plattform</span>
+            <span class="meta-value">KiKA / ARD Mediathek</span>
+          </li>
+        </ul>
+
+        <a class="watch-btn"
+           href="https://www.ardmediathek.de/video/triff/anne-frank/kika/Y3JpZDovL2tpa2EuZGUvcHVibGlrYXRpb24vY29udGVudC03MjkyOF8xNzM3NTcwMzAwMDAw"
+           target="_blank" rel="noopener">
+          Jetzt ansehen
+        </a>
+
+      </div>
+
+      <div class="film-thumb-wrap">
+        <img src="images/FilmBilder/TriffAnne.png" alt="Anne Frank – TRIFF">
+      </div>
+    </div>
+
+    <div class="film-card">
+      <div class="film-info">
+
+        <h2 class="film-title">Das kurze Leben der Anne Frank</h2>
+
+        <p class="film-description">
+          Die animierte Kurzbiografie erzählt Anne Franks Lebensgeschichte von ihrer Kindheit
+          in Frankfurt über die Flucht nach Amsterdam bis zur Zeit im Hinterhaus und ihrer
+          Verfolgung durch die Nationalsozialisten.
+        </p>
+
+        <ul class="film-meta">
+          <li>
+            <span class="meta-label">Produktion</span>
+            <span class="meta-value">Anne Frank House</span>
+          </li>
+          <li>
+            <span class="meta-label">Jahr</span>
+            <span class="meta-value">2019</span>
+          </li>
+          <li>
+            <span class="meta-label">Laufzeit</span>
+            <span class="meta-value">28 Minuten</span>
+          </li>
+          <li>
+            <span class="meta-label">Genre</span>
+            <span class="meta-value">Animierte Kurzbiografie</span>
+          </li>
+          <li>
+            <span class="meta-label">Plattform</span>
+            <span class="meta-value">Vimeo</span>
+          </li>
+        </ul>
+
+        <a class="watch-btn"
+           href="https://vimeo.com/329564758/5d00be0e79"
+           target="_blank" rel="noopener">
+          Jetzt ansehen
+        </a>
+
+      </div>
+
+      <div class="film-thumb-wrap">
+        <img src="images/FilmBilder/KurzeLeben.png" alt="Das kurze Leben der Anne Frank">
+      </div>
+    </div>
+
+    <div class="film-card">
+      <div class="film-info">
+
+        <h2 class="film-title">Anne Frank – So entstand ihr Tagebuch</h2>
+
+        <p class="film-description">
+          Wer war Anne Frank und warum wurde ihr Tagebuch weltberühmt?
+          Das Video erklärt Anne Franks Lebensgeschichte, die Flucht nach Amsterdam,
+          das Leben im Versteck und die Bedeutung ihres Tagebuchs als historisches Zeitdokument.
+        </p>
+
+        <ul class="film-meta">
+          <li>
+            <span class="meta-label">Produktion</span>
+            <span class="meta-value">MrWissen2Go Geschichte / Terra X</span>
+          </li>
+          <li>
+            <span class="meta-label">Jahr</span>
+            <span class="meta-value">2020</span>
+          </li>
+          <li>
+            <span class="meta-label">Laufzeit</span>
+            <span class="meta-value">11 Minuten</span>
+          </li>
+          <li>
+            <span class="meta-label">Genre</span>
+            <span class="meta-value">Erklärvideo</span>
+          </li>
+          <li>
+            <span class="meta-label">Plattform</span>
+            <span class="meta-value">YouTube</span>
+          </li>
+        </ul>
+
+        <a class="watch-btn"
+           href="https://www.youtube.com/watch?v=tIGhvjegg5s"
+           target="_blank" rel="noopener">
+          Jetzt ansehen
+        </a>
+
+      </div>
+
+      <div class="film-thumb-wrap">
+        <img src="images/FilmBilder/MrWissen.jpg" alt="Anne Frank – So entstand ihr Tagebuch">
+      </div>
+    </div>
+
+    <div class="film-card">
+      <div class="film-info">
+
+        <h2 class="film-title">Anne Franks Tod &amp; ihr Leben im geheimen Anbau im Schatten des Naziregimes</h2>
+
+        <p class="film-description">
+          Was geschah nach der Entdeckung des Hinterhauses? Das Video schildert die Verhaftung
+          der Familie Frank, die Deportation über Westerbork und Auschwitz sowie Anne Franks
+          letzte Lebensmonate im Konzentrationslager Bergen-Belsen.
+        </p>
+
+        <ul class="film-meta">
+          <li>
+            <span class="meta-label">Produktion</span>
+            <span class="meta-value">World History DE</span>
+          </li>
+          <li>
+            <span class="meta-label">Jahr</span>
+            <span class="meta-value">2023</span>
+          </li>
+          <li>
+            <span class="meta-label">Laufzeit</span>
+            <span class="meta-value">16 Minuten</span>
+          </li>
+          <li>
+            <span class="meta-label">Genre</span>
+            <span class="meta-value">Geschichtsdokumentation</span>
+          </li>
+          <li>
+            <span class="meta-label">Plattform</span>
+            <span class="meta-value">YouTube</span>
+          </li>
+        </ul>
+
+        <a class="watch-btn"
+           href="https://www.youtube.com/watch?v=vvbeGP140Ko&t=569s"
+           target="_blank" rel="noopener">
+          Jetzt ansehen
+        </a>
+
+      </div>
+
+      <div class="film-thumb-wrap">
+        <img src="images/FilmBilder/worldHistory.jpg" alt="Anne Frank – Verhaftung, Deportation und Tod">
+      </div>
+    </div>
+
+    <div class="film-card">
+      <div class="film-info">
+
+        <h2 class="film-title">Wo ist Anne Frank?</h2>
+
+        <p class="film-description">
+          Anne Franks Geschichte aus Sicht ihrer imaginären Freundin Kitty.
+          Der Film verbindet historische Ereignisse mit Fragen nach Erinnerung,
+          Ausgrenzung und Menschlichkeit.
+        </p>
+
+        <ul class="film-meta">
+          <li>
+            <span class="meta-label">Produktion</span>
+            <span class="meta-value">Walking The Dog / Bridgit Folman Film Gang</span>
+          </li>
+          <li>
+            <span class="meta-label">Jahr</span>
+            <span class="meta-value">2021</span>
+          </li>
+          <li>
+            <span class="meta-label">Laufzeit</span>
+            <span class="meta-value">89 Minuten</span>
+          </li>
+          <li>
+            <span class="meta-label">Genre</span>
+            <span class="meta-value">Animationsfilm</span>
+          </li>
+          <li>
+            <span class="meta-label">Plattform</span>
+            <span class="meta-value">ARD Mediathek</span>
+          </li>
+        </ul>
+
+        <a class="watch-btn"
+           href="https://www.ardmediathek.de/video/kinder-und-familienfilme/wo-ist-anne-frank/hr/YTliNWY4NTUtZTFjMC00Mzg5LTk1MTItZDA4MmVmZjQ4MDJh"
+           target="_blank" rel="noopener">
+          Jetzt ansehen
+        </a>
+
+      </div>
+
+      <div class="film-thumb-wrap">
+        <img src="images/FilmBilder/WoIst.jpeg" alt="Wo ist Anne Frank?">
+      </div>
+    </div>
+
+  </main>
+
+  <a class="back-card" href="index.html">Zur Startseite</a>
+
+  <footer>Anne Frank Unterricht · Gestaltet von <em>Hirmer</em></footer>
+
+</div>
+
+</body>
+</html>
