@@ -206,17 +206,20 @@
       padding: 0.9rem 1.6rem;
       box-shadow: none;
       border-color: rgba(255,255,255,0.06);
+      transition: background 0.25s, border-color 0.25s, box-shadow 0.3s, color 0.25s;
     }
     .action-feedback:hover {
-      background: rgba(14, 26, 42, 0.8);
-      border-color: rgba(255,255,255,0.12);
+      background: rgba(14, 26, 42, 0.88);
+      border-color: rgba(196,98,60,0.45);
+      box-shadow: 0 0 18px rgba(196,98,60,0.25), 0 0 40px rgba(196,98,60,0.12);
     }
     .action-feedback .label {
       font-size: 0.78rem;
       font-weight: 500;
       color: rgba(239,229,210,0.38);
+      transition: color 0.25s;
     }
-    .action-feedback:hover .label { color: rgba(239,229,210,0.6); }
+    .action-feedback:hover .label { color: rgba(239,229,210,0.75); }
 
     #fbOverlay{display:none;position:fixed;inset:0;z-index:19500;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:1.5rem}
     #fbOverlay.fb-open{display:flex}
@@ -249,7 +252,7 @@
     </a>
 
     <button class="action action-feedback" id="fbBtn">
-      <span class="label">Verbesserungsvorschlag einreichen</span>
+      <span class="label">Feedback &amp; Verbesserungsvorschläge</span>
     </button>
 
   </main>
