@@ -200,6 +200,31 @@
     }
 
     footer em { color: var(--accent); font-style: normal; }
+
+    .action-feedback {
+      background: rgba(8, 16, 28, 0.55);
+      padding: 0.9rem 1.6rem;
+      box-shadow: none;
+      border-color: rgba(255,255,255,0.06);
+    }
+    .action-feedback:hover {
+      background: rgba(14, 26, 42, 0.8);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .action-feedback .label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(239,229,210,0.38);
+    }
+    .action-feedback:hover .label { color: rgba(239,229,210,0.6); }
+
+    #fbOverlay{display:none;position:fixed;inset:0;z-index:19500;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:1.5rem}
+    #fbOverlay.fb-open{display:flex}
+    #fbCard{background:#0d1a2b;border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;width:100%;max-width:660px;box-shadow:0 24px 80px rgba(0,0,0,.85)}
+    #fbCardHead{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem .7rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07);font-family:system-ui,sans-serif;font-size:.78rem;font-weight:600;color:rgba(239,229,210,.6)}
+    #fbClose{background:none;border:none;color:rgba(255,255,255,.35);font-size:.95rem;cursor:pointer;padding:.2rem .5rem;border-radius:4px;transition:background .15s,color .15s}
+    #fbClose:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.75)}
+    #fbCard iframe{display:block;width:100%;height:480px;border:none}
   </style>
 </head>
 <body>
@@ -223,10 +248,33 @@
       <span class="label">Weiterführende Filmideen</span>
     </a>
 
+    <button class="action action-feedback" id="fbBtn">
+      <span class="label">Verbesserungsvorschlag einreichen</span>
+    </button>
+
   </main>
 
   <footer>Anne Frank Unterricht · Gestaltet von <em>Hirmer</em></footer>
 
+  <div id="fbOverlay" aria-hidden="true">
+    <div id="fbCard">
+      <div id="fbCardHead">
+        <span>Feedback &amp; Verbesserungsvorschläge</span>
+        <button id="fbClose" aria-label="Schließen">✕</button>
+      </div>
+      <iframe src="https://forms.cloud.microsoft/e/DXzEdrGJ4R?embed=true" title="Feedback" allowfullscreen></iframe>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var btn=document.getElementById('fbBtn'),ov=document.getElementById('fbOverlay'),cl=document.getElementById('fbClose');
+      btn.addEventListener('click',function(){ov.classList.add('fb-open');ov.setAttribute('aria-hidden','false')});
+      function closeFb(){ov.classList.remove('fb-open');ov.setAttribute('aria-hidden','true')}
+      cl.addEventListener('click',closeFb);
+      ov.addEventListener('click',function(e){if(e.target===ov)closeFb()});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('fb-open'))closeFb()});
+    })();
+  </script>
 
 </body>
 </html>
