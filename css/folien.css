@@ -1143,12 +1143,13 @@ a.nav-btn { text-decoration: none; }
 }
 .vid-vocab-grid .pvc-wrap { height: auto; min-height: 0; }
 .vid-right {
-  flex: 1; display: flex; flex-direction: column;
-  gap: .6rem; min-width: 0;
+  flex: 0 0 50%; display: flex; flex-direction: column;
+  gap: .6rem; min-width: 0; justify-content: center;
 }
 .vid-thumb-wrap {
-  flex: 1; position: relative; cursor: pointer;
-  border-radius: 14px; overflow: hidden; min-height: 0;
+  position: relative; cursor: pointer;
+  border-radius: 14px; overflow: hidden;
+  max-height: 58vh;
   box-shadow: 0 16px 48px rgba(0,0,0,.7), 0 4px 12px rgba(0,0,0,.4);
   background: #0a0a0a;
   transition: transform .2s ease, box-shadow .2s ease;
