@@ -1149,7 +1149,8 @@ a.nav-btn { text-decoration: none; }
 .vid-thumb-wrap {
   position: relative; cursor: pointer;
   border-radius: 14px; overflow: hidden;
-  max-height: 58vh; width: 100%;
+  width: 66%; max-width: 720px;
+  aspect-ratio: 16/9;
   box-shadow:
     0 0 0 1px rgba(255,255,255,.08),
     0 8px 32px rgba(0,0,0,.6),
@@ -1426,4 +1427,52 @@ a.nav-btn { text-decoration: none; }
   line-height: 1;
   cursor: pointer;
   z-index: 10000;
+}
+
+/* ── Video-Folie · Geo-Layout ─────────────────── */
+.vid-geo-layout {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.2rem; padding: 3% 5%;
+}
+.vid-geo-task {
+  text-align: center; max-width: 680px; width: 100%;
+}
+.vid-geo-eyebrow {
+  display: block;
+  font-size: clamp(.52rem,1.2vw,.68rem);
+  font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: .45em;
+}
+.vid-geo-question {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem,3.6vw,2.3rem);
+  color: var(--cream); font-weight: 700;
+  line-height: 1.18; margin: 0 0 .35em;
+}
+.vid-geo-hint {
+  font-size: clamp(.6rem,1.4vw,.78rem);
+  color: rgba(239,229,210,.45); margin: 0;
+  font-style: italic;
+}
+.vid-geo-footer {
+  display: flex; align-items: center; flex-wrap: wrap;
+  justify-content: center; gap: .45rem .9rem;
+  width: 66%; max-width: 720px;
+}
+.vid-geo-meta {
+  font-size: clamp(.52rem,1.2vw,.66rem);
+  color: rgba(239,229,210,.45);
+}
+.vid-geo-meta-label {
+  font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; font-size: .85em;
+  color: rgba(239,229,210,.3); margin-right: .3em;
+}
+.vid-geo-dot {
+  color: rgba(255,255,255,.18); font-size: .8rem;
+}
+.vid-geo-links {
+  display: flex; gap: .5rem; margin-left: .4rem;
 }
